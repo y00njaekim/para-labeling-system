@@ -18,16 +18,29 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
+  background: #F6F7F8;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 0.875rem;
+}
+
+.highlight {
+  background-image: linear-gradient(transparent 60%, rgba(0,120,250,0.5) 60%);
+  background-repeat: no-repeat;
+  background-size: 100% 15px;
+  background-position: 0 100%;
 }

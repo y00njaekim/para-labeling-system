@@ -1,68 +1,72 @@
 import Image from 'next/image';
-import { Button } from "@/app/ui/button"
+import { Button } from '@/app/ui/button';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-zinc-900 dark:to-zinc-800 ">
-      <section className="min-h-screen w-full py-12 flex items-center justify-center">
+    <main className="flex min-h-screen flex-col items-center p-20 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-zinc-900 dark:to-zinc-800 ">
+      <section className="w-full py-12 flex items-center justify-center">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 md:gap-8">
             <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg dark:bg-zinc-850 justify-between border border-gray-300">
               <div>
-                <h3 className="text-2xl font-bold text-center">Basic</h3>
-                <div className="mt-4 text-center text-zinc-600 dark:text-zinc-400">
-                  <span className="text-4xl font-bold">$29</span>/ month
+                <h3 className="text-2xl font-bold text-center">Study 1</h3>
+                <div className="w-48 h-48 mx-auto py-5">
+                  <Image
+                    src="/study1.png"
+                    alt="Study1 Image"
+                    width={256}
+                    height={256}
+                    layout="responsive"
+                  />
                 </div>
-                <ul className="mt-4 space-y-2">
+                <ul className="mt-8 space-y-2">
                   <li className="flex items-center">
-                    <CheckIcon className="text-white text-xs bg-green-500 rounded-full mr-2 p-1" />
-                    720p Video Rendering
-                  </li>
-                  <li className="flex items-center">
-                    <CheckIcon className="text-white text-xs bg-green-500 rounded-full mr-2 p-1" />
-                    2GB Cloud Storage
-                  </li>
-                  <li className="flex items-center">
-                    <CheckIcon className="text-white text-xs bg-green-500 rounded-full mr-2 p-1" />
-                    Basic Video Templates
+                    <CheckIcon className="text-white text-sm font-medium bg-green-500 rounded-full mr-2 p-1" />
+                    Text transcription + Nuance tagging
                   </li>
                 </ul>
               </div>
               <div className="mt-6">
-                <Button className="w-full">Get Started</Button>
+                <Link
+                  href={{
+                    pathname: '/login',
+                    query: { study: '1' },
+                  }}
+                >
+                  <Button className="w-full">시작하기</Button>
+                </Link>
               </div>
             </div>
             <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg dark:bg-zinc-850 justify-between border border-gray-300">
               <div>
-                <h3 className="text-2xl font-bold text-center">Enterprise</h3>
-                <div className="mt-4 text-center text-zinc-600 dark:text-zinc-400">
-                  <span className="text-4xl font-bold">$99</span>/ month
+                <h3 className="text-2xl font-bold text-center">Study 2</h3>
+                <div className="w-48 h-48 mx-auto py-5">
+                  <Image
+                    src="/study2.png"
+                    alt="Study2 Image"
+                    width={256}
+                    height={256}
+                    layout="responsive"
+                  />
                 </div>
-                <ul className="mt-4 space-y-2">
+                <ul className="mt-8 space-y-2">
                   <li className="flex items-center">
-                    <CheckIcon className="text-white text-xs bg-green-500 rounded-full mr-2 p-1" />
-                    4K Video Rendering
-                  </li>
-                  <li className="flex items-center">
-                    <CheckIcon className="text-white text-xs bg-green-500 rounded-full mr-2 p-1" />
-                    Unlimited Cloud Storage
-                  </li>
-                  <li className="flex items-center">
-                    <CheckIcon className="text-white text-xs bg-green-500 rounded-full mr-2 p-1" />
-                    Custom Video Templates
-                  </li>
-                  <li className="flex items-center">
-                    <CheckIcon className="text-white text-xs bg-green-500 rounded-full mr-2 p-1" />
-                    Advanced Collaboration Tools
-                  </li>
-                  <li className="flex items-center">
-                    <CheckIcon className="text-white text-xs bg-green-500 rounded-full mr-2 p-1" />
-                    Dedicated Support
+                    <CheckIcon className="text-white text-sm font-medium bg-green-500 rounded-full mr-2 p-1" />
+                    Recording + Nuance tagging
                   </li>
                 </ul>
               </div>
               <div className="mt-6">
-                <Button className="w-full">Get Started</Button>
+                <Link
+                  className="w-full"
+                  href={{
+                    pathname: '/login',
+                    query: { study: '2' },
+                  }}
+                >
+                  <Button className="w-full">시작하기</Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -72,7 +76,7 @@ export default function Home() {
   );
 }
 
-function CheckIcon(props) {
+function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
