@@ -10,6 +10,7 @@ import { useState } from 'react';
 export default function Page() {
   const searchParams = useSearchParams()
   const search = searchParams.get('study')
+  const [participantNum, setParticipantNum] = useState('')
 
   const [linkHref, setLinkHref] = useState('')
   const handleParticipantNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {

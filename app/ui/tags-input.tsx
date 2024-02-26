@@ -3,34 +3,29 @@
 import React, { useState } from 'react';
 
 interface TagsInputProps {
-  initialTags?: string[];
-  onTagsChange?: (tags: string[]) => void;
+  tags: string[];
+  onTagsChange: (tags: string[]) => void;
 }
 
-export const TagsInput: React.FC<TagsInputProps> = ({ initialTags = [] , onTagsChange }) => {
-  const [tags, setTags] = useState<string[]>(initialTags);
+export const TagsInput: React.FC<TagsInputProps> = ({ tags, onTagsChange }) => {
   const [inputValue, setInputValue] = useState<string>('');
-
-  const updateTags = (newTags: string[]) => {
-    setTags(newTags);
-    if(onTagsChange) {
-      onTagsChange(newTags);
-    }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     if (e.target.value.includes(',')) {
-      const newTags = e.target.value.split(',').filter((tag) => tag.trim() !== '');
-      setTags((prevTags) => [...prevTags, ...newTags]);
-      updateTags([...tags, ...newTags]);
+      const newTags = e.target.value
+        .split(',')
+        .filter(tag => tag.trim() !== '');
+      const updatedTags = [...tags, ...newTags];
+      onTagsChange(updatedTags);
 
       setInputValue('');
     }
   };
 
   const removeTag = (index: number) => {
-    updateTags(tags.filter((_, i) => i !== index)); // Use updateTags here as well
+    const updatedTags = tags.filter((_, i) => i !== index);
+    onTagsChange(updatedTags);
   };
 
   return (

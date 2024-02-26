@@ -58,15 +58,15 @@ export default function Home() {
                 </ul>
               </div>
               <div className="mt-6">
-                <Link
+                {/* <Link
                   className="w-full"
                   href={{
                     pathname: '/login',
                     query: { study: '2' },
                   }}
-                >
+                > */}
                   <Button className="w-full">시작하기</Button>
-                </Link>
+                {/* </Link> */}
               </div>
             </div>
           </div>

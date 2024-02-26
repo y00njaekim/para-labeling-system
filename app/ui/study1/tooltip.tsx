@@ -1,4 +1,3 @@
-// Tooltip.tsx
 'use client';
 import { useState } from 'react';
 import { InfoIcon } from '@/app/ui/icon';

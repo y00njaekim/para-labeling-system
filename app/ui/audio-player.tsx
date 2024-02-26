@@ -1,7 +1,6 @@
 'use client';
-// Adjustments in AudioPlayer.tsx
 import React, { useState, useEffect, useRef } from 'react';
-import { PlayIcon, PauseIcon } from '@/app/ui/icon'; // Adjust the path as necessary.
+import { PlayIcon, PauseIcon } from '@/app/ui/icon';
 
 interface AudioPlayerProps {
   audioSrc: string;
@@ -15,14 +14,12 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc }) => {
   useEffect(() => {
     if (!audioSrc) {
       setAudioProgress(0);
-      setIsPlaying(false); // Ensure the play state is reset if the audio source is empty.
-      return; // Do not proceed if audioSrc is empty.
+      setIsPlaying(false);
+      return;
     }
 
     const audio = new Audio(audioSrc);
     audioRef.current = audio;
-    // audioRef.current = new Audio(audioSrc);
-    // const audio = audioRef.current;
 
     const updateProgress = () => {
       if (!audio.duration) return;
@@ -31,8 +28,8 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc }) => {
     };
 
     const handleAudioEnd = () => {
-      setIsPlaying(false); // Reset play state when audio ends.
-      setAudioProgress(0); // Optionally reset progress.
+      setIsPlaying(false);
+      setAudioProgress(0); 
     };
 
     audio.addEventListener('timeupdate', updateProgress);
@@ -45,7 +42,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc }) => {
   }, [audioSrc]);
 
   const togglePlay = () => {
-    if (!audioSrc) return; // Do not play if audioSrc is empty.
+    if (!audioSrc) return;
 
     const audio = audioRef.current;
     if (audio && isPlaying) {

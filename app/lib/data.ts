@@ -11,7 +11,6 @@ import {
   limit,
 } from 'firebase/firestore';
 
-
 export const addTranscription = (data: Transcription) => {
   try {
     addDoc(collection(database, 'transcriptions'), data);
@@ -42,7 +41,7 @@ export const fetchText = async (id: string): Promise<Text | null> => {
 export const fetchTexts = async (): Promise<Text[]> => {
   const texts: Text[] = [];
   const querySnapshot = await getDocs(
-    query(collection(database, 'text'), where("count", '==', 0), limit(30))
+    query(collection(database, 'text'), where('count', '==', 0), limit(30))
   );
   querySnapshot.forEach(doc => {
     texts.push(doc.data() as Text);
@@ -64,7 +63,7 @@ export const fetchAudio = async (id: string): Promise<Audio | null> => {
 export const fetchAudios = async (): Promise<Audio[]> => {
   const audios: Audio[] = [];
   const querySnapshot = await getDocs(
-    query(collection(database, 'audio'), where("count", '==', 0), limit(10))
+    query(collection(database, 'audio'), where('participant', '==', '2'))
   );
   querySnapshot.forEach(doc => {
     audios.push(doc.data() as Audio);
