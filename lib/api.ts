@@ -1,5 +1,10 @@
 import { fileUpload } from '@/lib/storage';
-import { addRecording, fetchTones, fetchUserSubmittedRecordings, fetchUserSubmittedTexts } from '@/lib/data';
+import {
+  addRecording,
+  fetchTones,
+  fetchUserSubmittedRecordings,
+  fetchUserSubmittedTexts,
+} from '@/lib/data';
 import { Timestamp } from 'firebase/firestore';
 import { UserParaText, UserRecording } from '@/lib/definition';
 
@@ -8,8 +13,9 @@ export const uploadAndAddRecording = async (
   tone: string,
   participant: string,
   file: File
-) => {
+): Promise<boolean> => {
   try {
+    console.log("try")
     const path = 'recordings';
     const downloadURL = await fileUpload(file, path);
     addRecording({
@@ -19,8 +25,11 @@ export const uploadAndAddRecording = async (
       recordingURL: downloadURL,
       createdAt: Timestamp.now(),
     });
+    return true;
   } catch (error) {
+    console.log("error")
     console.error('Error uploading file:', error);
+    return false;
   }
 };
 
@@ -60,7 +69,9 @@ export const getUserSubmittedRecordings = async (participant: string) => {
 
   const merged: UserRecording[] = [];
   tones.forEach(tone => {
-    const match = recordings.find(userRecording => userRecording.tone === tone.tone);
+    const match = recordings.find(
+      userRecording => userRecording.tone === tone.tone
+    );
     if (match) {
       const { createdAt, participant, ...rest } = match;
       merged.push({

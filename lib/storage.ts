@@ -7,9 +7,15 @@ export const fileUpload = (file: any, path: string): Promise<string> => {
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
       'state_changed',
-      snapshot => {},
-      error => reject(error),
+      snapshot => {
+        console.log("Snapshot")
+      },
+      error => {
+        console.log("fileUpload Error")
+        reject(error)
+      },
       () => {
+        console.log("fileUpload Return")
         getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
           resolve(downloadURL);
         });

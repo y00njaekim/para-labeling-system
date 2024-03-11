@@ -11,24 +11,22 @@ interface CountBadgeProps {
 }
 
 export const CountBadge: React.FC<CountBadgeProps> = ({ dataLength, submittedDataLength }) => {
-  const submittedDataLengthState = useStudy1Store((state) => state.count);
-  const dataLengthState = useStudy1Store((state) => state.total);
-  const setCount = useStudy1Store((state) => state.setCount);
-  const setTotal = useStudy1Store((state) => state.setTotal);
+  const { setCount, setTotal } = useStudy1Store();
 
+  // 컴포넌트 마운트 시 한 번만 상태 초기화
   useEffect(() => {
-    if (submittedDataLengthState !== submittedDataLength) {
-      setCount(submittedDataLength);
-    }
-    if (dataLengthState !== dataLength) {
-      setTotal(dataLength);
-    }
-  }, [submittedDataLength, dataLength, submittedDataLengthState, dataLengthState, setCount, setTotal]);
+    setCount(submittedDataLength);
+    setTotal(dataLength);
+  }, [setCount, setTotal]);
+
+  // 사용되는 상태를 직접 구독
+  const count = useStudy1Store(state => state.count);
+  const total = useStudy1Store(state => state.total);
 
   return <div className="flex h-full items-end space-x-2 mr-6 align-bottom">
     <span className="text-sm">진행 개수</span>
     <Badge variant="secondary" className="bg-gray-300">
-      {submittedDataLengthState} / {dataLengthState}
+      {count} / {total}
     </Badge>
   </div>;
 }

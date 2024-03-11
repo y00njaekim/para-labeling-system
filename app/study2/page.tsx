@@ -4,8 +4,6 @@ import { Study2TableRow } from '@/components/study2/table-row';
 import { getUserSubmittedRecordings } from '@/lib/api';
 import { MyTable } from '@/components/my-table';
 import { Suspense } from 'react';
-import { CountBadge } from '@/components/study1/count-badge';
-import { Button } from '@/components/button';
 import { ExitStatus } from '@/components/study2/exit-status';
 
 export default async function Page({

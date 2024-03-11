@@ -8,7 +8,6 @@ import { uploadAndAddRecording } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { useStudy2Store } from '@/lib/zustand';
 
-
 interface Study2TableRowProps {
   key: number;
   participant: string;
@@ -28,19 +27,34 @@ export const Study2TableRow: React.FC<Study2TableRowProps> = ({
   description,
   isUserSubmitted,
 }) => {
-  const increaseCount = useStudy2Store((state) => state.increase);
-  const decreaseCount = useStudy2Store((state) => state.decrease);
+  const increaseCount = useStudy2Store(state => state.increase);
+  const decreaseCount = useStudy2Store(state => state.decrease);
   const [isSubmitted, setIsSubmitted] = useState(isUserSubmitted);
   const [audioFile, setAudioFile] = useState<File | null>(null);
 
   const handleSubmit = () => {
+    console.log('handleSubmit');
     if (audioFile) {
-      uploadAndAddRecording(emotion, tone, participant, audioFile);
-      increaseCount();
+      console.log('audioFile', audioFile);
       setIsSubmitted(true);
+      increaseCount();
+      uploadAndAddRecording(emotion, tone, participant, audioFile)
+        .then(isSuccessful => {
+          if (!isSuccessful) {
+            console.error('Error in uploading and adding recording');
+            setIsSubmitted(false);
+            decreaseCount();
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          setIsSubmitted(false);
+          decreaseCount();
+        });
     } else if (recordingURL) {
-      increaseCount();
+      console.log('recordingURL', recordingURL);
       setIsSubmitted(true);
+      increaseCount();
     }
   };
 
@@ -66,13 +80,13 @@ export const Study2TableRow: React.FC<Study2TableRowProps> = ({
       />
       {isSubmitted ? (
         <>
-          <div className='flex items-center min-w-16'>
+          <div className="flex items-center min-w-16">
             <Button onClick={handleEdit}>수정</Button>
           </div>
         </>
       ) : (
         <>
-          <div className='flex items-center min-w-16'>
+          <div className="flex items-center min-w-16">
             <Button
               className={cn({
                 'bg-gray-300 pointer-events-none': !audioFile && !recordingURL,
