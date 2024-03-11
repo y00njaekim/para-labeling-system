@@ -1,22 +1,35 @@
 'use client';
 
-import { Button } from '@/app/ui/button';
-import { link } from 'fs';
+import { Button } from '@/components/button';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
+export default function Page({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const { study } = searchParams as { [key: string]: string };
+  const [linkHref, setLinkHref] = useState('');
+  const [isValid, setIsValid] = useState(false);
 
-export default function Page() {
-  const searchParams = useSearchParams()
-  const search = searchParams.get('study')
-  const [participantNum, setParticipantNum] = useState('')
+  const handleParticipantNumChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    const isValidInput = /^P\d{1,2}$/.test(value);
+    setIsValid(isValidInput);
 
-  const [linkHref, setLinkHref] = useState('')
-  const handleParticipantNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    search === '1' ? setLinkHref(`/study1?participant=${event.target.value}`) : setLinkHref(`/study2?participant=${event.target.value}`);
-  }
-  
+    if (isValidInput && searchParams) {
+      study === '1'
+        ? setLinkHref(`/study1?participant=${value}`)
+        : setLinkHref(`/study2?participant=${value}`);
+    } else {
+      setLinkHref(``);
+    }
+  };
+
   return (
     <div className="flex h-screen items-center justify-center">
       <form className="flex flex-col gap-4 w-96">
@@ -33,7 +46,13 @@ export default function Page() {
           />
         </div>
         <Link href={linkHref}>
-        <Button>시작하기</Button>
+          <Button
+            className={cn({
+              'bg-gray-300 pointer-events-none': !isValid,
+            })}
+          >
+            시작하기
+          </Button>
         </Link>
       </form>
     </div>

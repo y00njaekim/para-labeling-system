@@ -24,7 +24,8 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
-  background: #F6F7F8;
+  /* background: #F6F7F8; */
+  background: rgb(249 250 251);
 }
 
 @layer utilities {

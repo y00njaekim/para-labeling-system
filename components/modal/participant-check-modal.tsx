@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Modal } from '@/app/ui/fundamental/modal';
+import { Modal } from '@/components/modal/modal';
 
 export const ParticipantCheckModal = () => {
   const searchParams = useSearchParams();

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Button } from '@/app/ui/button';
+import { Button } from '@/components/button';
 import Link from 'next/link';
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
                 <ul className="mt-8 space-y-2">
                   <li className="flex items-center">
                     <CheckIcon className="text-white text-sm font-medium bg-green-500 rounded-full mr-2 p-1" />
-                    Text transcription + Nuance tagging
+                    Text to Text
                   </li>
                 </ul>
               </div>
@@ -53,20 +53,20 @@ export default function Home() {
                 <ul className="mt-8 space-y-2">
                   <li className="flex items-center">
                     <CheckIcon className="text-white text-sm font-medium bg-green-500 rounded-full mr-2 p-1" />
-                    Recording + Nuance tagging
+                    Text to Recording
                   </li>
                 </ul>
               </div>
               <div className="mt-6">
-                {/* <Link
+                <Link
                   className="w-full"
                   href={{
                     pathname: '/login',
                     query: { study: '2' },
                   }}
-                > */}
+                >
                   <Button className="w-full">시작하기</Button>
-                {/* </Link> */}
+                </Link>
               </div>
             </div>
           </div>

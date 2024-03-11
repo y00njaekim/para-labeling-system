@@ -13,6 +13,14 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      backgroundColor: {
+        background: "var(--color-background)",
+        foreground: "var(--color-foreground)",
+        "muted-foreground": "var(--color-muted-foreground)",
+        input: "var(--color-input)",
+        ring: "var(--color-ring)",
+        "blue-transparent": "rgba(191, 219, 254, 0.3)",
+      },
     },
   },
   plugins: [],
