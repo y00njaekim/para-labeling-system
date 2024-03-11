@@ -28,14 +28,15 @@ export default function Home() {
                 </ul>
               </div>
               <div className="mt-6">
-                <Link
+                <Button className="w-full">시작하기</Button>
+                {/* <Link
                   href={{
                     pathname: '/login',
                     query: { study: '1' },
                   }}
                 >
                   <Button className="w-full">시작하기</Button>
-                </Link>
+                </Link> */}
               </div>
             </div>
             <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg justify-between border border-gray-300">
