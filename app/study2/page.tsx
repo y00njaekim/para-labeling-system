@@ -26,7 +26,7 @@ export default async function Page({
       <div className="flex justify-between items-end sticky top-0 py-4 w-full z-10 bg-gray-50 border-b">
           <div>
             <p className="text-xl">
-              다음 텍스트를 주어진 뉘앙스가 잘 느껴지도록 수정해보세요:
+              다음 텍스트를 주어진 뉘앙스가 잘 느껴지도록 말해보세요:
             </p>
             <p className="mt-1 text-lg font-bold">
               &apos;지금 방에서 나갈 거예요. 하지만 나중에 돌아올 거예요.&apos;
