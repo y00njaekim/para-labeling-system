@@ -48,7 +48,6 @@ export const addRecording = async (data: Recording): Promise<void> => {
 
 export const addText = async (data: ParaText): Promise<void> => {
   try {
-    console.log(data)
     await addDoc(collection(database, 'texts'), data);
   } catch (e) {
     console.error(e);

@@ -22,8 +22,6 @@ export const ExitStatus: React.FC<ExitStatusProps> = ({
   const [linkHref, setLinkHref] = useState('');
 
   useEffect(() => {
-    console.log('submittedDataLengthState', submittedDataLengthState);
-    console.log('dataLengthState', dataLengthState);
     if (submittedDataLengthState === dataLengthState) {
       setIsCompleted(true);
       setLinkHref('/');

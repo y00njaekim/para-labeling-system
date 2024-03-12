@@ -38,7 +38,6 @@ export const Study1TableRow: React.FC<Study1TableRowProps> = ({
   };
 
   const handleSubmit = () => {
-    console.log(inputValue);
     addText({
       emotion,
       tone,

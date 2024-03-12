@@ -33,9 +33,7 @@ export const Study2TableRow: React.FC<Study2TableRowProps> = ({
   const [audioFile, setAudioFile] = useState<File | null>(null);
 
   const handleSubmit = () => {
-    console.log('handleSubmit');
     if (audioFile) {
-      console.log('audioFile', audioFile);
       setIsSubmitted(true);
       increaseCount();
       uploadAndAddRecording(emotion, tone, participant, audioFile)
@@ -52,7 +50,6 @@ export const Study2TableRow: React.FC<Study2TableRowProps> = ({
           decreaseCount();
         });
     } else if (recordingURL) {
-      console.log('recordingURL', recordingURL);
       setIsSubmitted(true);
       increaseCount();
     }

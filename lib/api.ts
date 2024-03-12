@@ -15,7 +15,6 @@ export const uploadAndAddRecording = async (
   file: File
 ): Promise<boolean> => {
   try {
-    console.log("try")
     const path = 'recordings';
     const downloadURL = await fileUpload(file, path);
     addRecording({
@@ -27,7 +26,6 @@ export const uploadAndAddRecording = async (
     });
     return true;
   } catch (error) {
-    console.log("error")
     console.error('Error uploading file:', error);
     return false;
   }

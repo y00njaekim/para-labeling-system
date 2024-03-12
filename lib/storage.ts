@@ -8,14 +8,12 @@ export const fileUpload = (file: any, path: string): Promise<string> => {
     uploadTask.on(
       'state_changed',
       snapshot => {
-        console.log("Snapshot")
       },
       error => {
-        console.log("fileUpload Error")
         reject(error)
       },
       () => {
-        console.log("fileUpload Return")
+        console.log("fileUpload Complete!")
         getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
           resolve(downloadURL);
         });
