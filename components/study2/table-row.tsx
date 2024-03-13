@@ -30,24 +30,29 @@ export const Study2TableRow: React.FC<Study2TableRowProps> = ({
   const increaseCount = useStudy2Store(state => state.increase);
   const decreaseCount = useStudy2Store(state => state.decrease);
   const [isSubmitted, setIsSubmitted] = useState(isUserSubmitted);
+  const [isLoading, setIsLoading] = useState(false);
   const [audioFile, setAudioFile] = useState<File | null>(null);
 
   const handleSubmit = () => {
     if (audioFile) {
-      setIsSubmitted(true);
-      increaseCount();
+      // setIsSubmitted(true);
+      setIsLoading(true);
       uploadAndAddRecording(emotion, tone, participant, audioFile)
         .then(isSuccessful => {
-          if (!isSuccessful) {
+          if (isSuccessful) {
+            setIsSubmitted(true);
+            increaseCount();
+            setIsLoading(false);
+          } else {
             console.error('Error in uploading and adding recording');
             setIsSubmitted(false);
-            decreaseCount();
+            setIsLoading(false);
           }
         })
         .catch(error => {
           console.error(error);
           setIsSubmitted(false);
-          decreaseCount();
+          setIsLoading(false);
         });
     } else if (recordingURL) {
       setIsSubmitted(true);
@@ -87,10 +92,17 @@ export const Study2TableRow: React.FC<Study2TableRowProps> = ({
             <Button
               className={cn({
                 'bg-gray-300 pointer-events-none': !audioFile && !recordingURL,
+                'pointer-events-none': isLoading,
               })}
               onClick={handleSubmit}
             >
-              완료
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white-900"></div>
+                </>
+              ) : (
+                <>완료</>
+              )}
             </Button>
           </div>
         </>
