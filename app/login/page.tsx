@@ -67,7 +67,7 @@ export default function Page({
           <input
             className="border-gray-300 shadow-sm p-2 border rounded-md"
             id="participantnum-input"
-            placeholder="P1"
+            placeholder="P1 (대문자 P + 숫자)"
             type="text"
             onChange={handleParticipantNumChange}
           />
