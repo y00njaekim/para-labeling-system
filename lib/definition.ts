@@ -37,3 +37,9 @@ export type UserParaText = {
   description: string;
   isSubmitted: boolean;
 }
+
+export type User = {
+  id: string;
+  participant: string;
+  password: string;
+}

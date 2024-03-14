@@ -1,42 +1,34 @@
 'use client';
 
 import { Button } from '@/components/button';
-import { validatePassword } from '@/lib/api';
+import { EditPassword, validatePassword } from '@/lib/api';
 import { cn, createAndStoreToken, hashing } from '@/lib/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
-  const { study } = searchParams as { [key: string]: string };
-  const [linkHref, setLinkHref] = useState('');
+export default function Page({}: {}) {
+  const [isErrorMessageOpen, setIsErrorMessageOpen] = useState(false);
   const [isValid, setIsValid] = useState(false);
-  const [isPasswordNotCorrectDivOpen, setIsPasswordNotCorrectDivOpen] =
-    useState(false);
   const [participantNum, setParticipantNum] = useState('');
   const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
   const router = useRouter();
 
   useEffect(() => {
-    if (searchParams) {
-      setLinkHref(`/study${study}`);
+    if (newPassword !== '' && repeatPassword !== '' && newPassword === repeatPassword) {
+      setIsValid(true);
     } else {
-      setLinkHref('');
+      setIsValid(false);
     }
-  }, [searchParams, study]);
+  }, [newPassword, repeatPassword]);
 
   const handleParticipantNumChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     event.preventDefault();
-    const value = event.target.value;
-    const isValidInput = /^P\d{1,2}$/.test(value);
-    setIsValid(isValidInput);
-    setParticipantNum(value);
+    setParticipantNum(event.target.value);
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,21 +36,33 @@ export default function Page({
     setPassword(event.target.value);
   };
 
+  const handleNewPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    event.preventDefault();
+    setNewPassword(event.target.value);
+  };
+
+  const handleRepeatPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    event.preventDefault();
+    setRepeatPassword(event.target.value);
+  };
+
   const onSubmit = async (event: React.MouseEvent) => {
     event.preventDefault();
-    const valid = await validatePassword(participantNum, password);
+    const valid = await EditPassword(participantNum, password, newPassword);
     if (valid) {
-      createAndStoreToken(participantNum);
-      setIsPasswordNotCorrectDivOpen(false);
-      router.push(linkHref);
+      setIsErrorMessageOpen(false);
+      router.push('/login?study=2');
     } else {
-      setIsPasswordNotCorrectDivOpen(true);
+      setIsErrorMessageOpen(true);
     }
   };
 
   return (
     <div className="flex h-screen items-center justify-center">
-      {/* <form className="flex flex-col gap-4 w-96"> */}
       <form className="flex flex-col w-96">
         <div className="flex flex-col space-y-2">
           <label className="text-sm font-medium" htmlFor="labelName">
@@ -73,9 +77,8 @@ export default function Page({
           />
         </div>
         <div className="flex flex-col space-y-2 mt-2">
-          {/* <div className="flex flex-col"> */}
           <label className="text-sm font-medium" htmlFor="labelName">
-            비밀번호
+            기존 비밀번호
           </label>
           <input
             className="border-gray-300 shadow-sm p-2 border rounded-md"
@@ -85,20 +88,37 @@ export default function Page({
             onChange={handlePasswordChange}
           />
         </div>
-        <div className="flex justify-between">
-          <div className="text-xs mt-2">
-            <Link className="text-blue-400 hover:text-blue-300" href="/registration">
-              비밀번호등록하기
-            </Link>
-          </div>
-          <div
-            className={cn('text-xs mt-2', {
-              'max-h-12': isPasswordNotCorrectDivOpen,
-              'max-h-0 overflow-hidden': !isPasswordNotCorrectDivOpen,
+        <div
+            className={cn('text-xs mt-2 transition-all duration-500', {
+              'max-h-12': isErrorMessageOpen,
+              'max-h-0 overflow-hidden': !isErrorMessageOpen,
             })}
           >
             <p className="text-red-400">비밀번호가 잘못되었습니다</p>
           </div>
+        <div className="flex flex-col space-y-2 mt-2">
+          <label className="text-sm font-medium" htmlFor="labelName">
+            새로운 비밀번호
+          </label>
+          <input
+            className="border-gray-300 shadow-sm p-2 border rounded-md"
+            id="newpassword-input"
+            placeholder="새로운 비밀번호"
+            type="password"
+            onChange={handleNewPasswordChange}
+          />
+        </div>
+        <div className="flex flex-col space-y-2 mt-2">
+          <label className="text-sm font-medium" htmlFor="labelName">
+            새로운 비밀번호 확인
+          </label>
+          <input
+            className="border-gray-300 shadow-sm p-2 border rounded-md"
+            id="password-input"
+            placeholder="새로운 비밀번호 확인"
+            type="password"
+            onChange={handleRepeatPasswordChange}
+          />
         </div>
         <div className="flex items-top justify-between mt-2">
           <Button

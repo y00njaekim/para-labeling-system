@@ -2,11 +2,14 @@ import { fileUpload } from '@/lib/storage';
 import {
   addRecording,
   fetchTones,
+  fetchUser,
   fetchUserSubmittedRecordings,
   fetchUserSubmittedTexts,
+  patchPassword,
 } from '@/lib/data';
 import { Timestamp } from 'firebase/firestore';
 import { UserParaText, UserRecording } from '@/lib/definition';
+import { hashing } from '@/lib/utils';
 
 export const uploadAndAddRecording = async (
   emotion: string,
@@ -90,3 +93,18 @@ export const getUserSubmittedRecordings = async (participant: string) => {
 
   return merged;
 };
+
+export const validatePassword = async (participant: string, password: string) => {
+  const user = await fetchUser(participant);
+  if (!user) return false;
+  return user.password === hashing(password);
+}
+
+export const EditPassword = async (participant: string, password: string, newPassword: string) => {
+  const user = await fetchUser(participant);
+  if (!user) return false;
+  const isValid = user.password === hashing(password);
+  if(!isValid) return false;
+  patchPassword(user, newPassword);
+  return true;
+}
