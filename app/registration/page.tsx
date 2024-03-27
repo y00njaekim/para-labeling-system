@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/button';
-import { EditPassword, validatePassword } from '@/lib/api';
+import { EditPassword, verifyPassword } from '@/lib/api';
 import { cn, createAndStoreToken, hashing } from '@/lib/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

@@ -94,7 +94,7 @@ export const getUserSubmittedRecordings = async (participant: string) => {
   return merged;
 };
 
-export const validatePassword = async (participant: string, password: string) => {
+export const verifyPassword = async (participant: string, password: string) => {
   const user = await fetchUser(participant);
   if (!user) return false;
   return user.password === hashing(password);
